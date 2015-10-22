@@ -26,7 +26,7 @@ class CreatePostRequest extends Request
         return [
             'title' => 'required|min:5',
 //            'description' => 'required',
-            'slug' => 'required'
+            'slug' => 'required',
         ];
     }
 }

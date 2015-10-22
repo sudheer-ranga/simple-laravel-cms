@@ -21,6 +21,11 @@
                     {!! Form::text('slug', null, ['class' => 'form-control']) !!}
                 </div>
 
+                <div class="form-group">
+                    {!! Form::label('tags') !!}
+                    {!! Form::select('tags[]', $tags, null, ['class' => 'form-control', 'multiple' => 'multiple']) !!}
+                </div>
+
                 {!! Form::submit('Add Post', ['class' => 'btn btn-primary btn-block']) !!}
 
             {!! Form::close() !!}

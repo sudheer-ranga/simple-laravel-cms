@@ -7,6 +7,7 @@ use App\Http\Requests;
 use App\Http\Requests\CreatePostRequest;
 use App\Http\Controllers\Controller;
 use \App\Post;
+use \App\Tag;
 
 class PostController extends Controller
 {
@@ -32,7 +33,8 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('post.create');
+        $tags = Tag::lists('name', 'id');
+        return view('post.create', compact('tags'));
     }
 
     /**
@@ -44,10 +46,12 @@ class PostController extends Controller
     public function store(CreatePostRequest $request)
     {
 //        dd($request);
+//        dd($request->input('tags'));
 //        $post = new Post;
 //        $post->fill($request->all());
 //        $post->save();
-        Post::create($request->all());
+        $post = Post::create($request->all());
+        $post->tags()->attach($request->input('tags'));
         return redirect(route('post.index'))->with('message', 'Post has been created successfully!');
     }
 
@@ -61,6 +65,7 @@ class PostController extends Controller
     {
 //        dd($post);
         $post = Post::whereSlug($slug)->first();
+//        dd($post->tags->toArray());
         return view('post.single', compact('post'));
     }
 
@@ -73,7 +78,8 @@ class PostController extends Controller
     public function edit($slug)
     {
         $post = Post::whereSlug($slug)->first();
-        return view('post.edit', compact('post'));
+        $tags = Tag::lists('name', 'id');
+        return view('post.edit', compact('post', 'tags'));
     }
 
     /**
@@ -86,6 +92,16 @@ class PostController extends Controller
     {
         $post = Post::whereSlug($slug)->first();
         $post->fill($request->all());
+
+//        var_dump($request->input('tags'));
+//        dd($post->tags()->lists('id')->toArray());
+
+//        $tag_ids = $post->tags()->lists('id')->toArray();
+//        $post->tags()->detach($tag_ids);
+//        $post->tags()->attach($request->input('tags'));
+
+//        Using Sync instead of detach and attach for updating the tags to an post
+        $post->tags()->sync($request->input('tags'));
 //        $post->title = $request->title;
 //        $post->description = $request->description;
         $post->save();

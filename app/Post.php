@@ -14,4 +14,8 @@ class Post extends Model
     public $timestamps = true;
 
     protected $dates = ['deleted_at'];
+
+    public function tags() {
+        return $this->belongsToMany('App\Tag');
+    }
 }

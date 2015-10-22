@@ -20,6 +20,11 @@
             {!! Form::text('slug', null, ['class' => 'form-control']) !!}
         </div>
 
+        <div class="form-group">
+            {!! Form::label('tags') !!}
+            {!! Form::select('tags[]', $tags, $post->tags->lists('id')->toArray(), ['class' => 'form-control', 'multiple' => 'multiple']) !!}
+        </div>
+
         {!! Form::submit('Update Post', ['class' => 'btn btn-primary btn-block']) !!}
     {!! Form::close() !!}
 
