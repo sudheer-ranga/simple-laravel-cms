@@ -1,14 +1,10 @@
 @extends('master')
 
 @section('content')
-    <h1>List Posts</h1>
-
-    @foreach($posts as $post)
-        <div class="col-xs-12">
-            <h2>
-                {!! link_to_route('post.show', $post->title, [$post->slug]) !!}
-            </h2>
-            <p>{!! $post->description !!}</p>
-        </div><!-- /.col -->
-    @endforeach
+    <h2>All Posts</h2>
+    <div class="row">
+        @foreach($posts as $post)
+            @include('post._post_list')
+        @endforeach
+    </div><!-- /.row -->
 @endsection

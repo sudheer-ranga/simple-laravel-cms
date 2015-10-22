@@ -1,7 +1,7 @@
 @extends('master')
 
 @section('content')
-    <h1>Edit Post</h1>
+    <h2>Edit Post</h2>
 
     {!! Form::model($post, ['route' => ['post.update', $post->slug], 'method' => 'PATCH']) !!}
         <div class="form-group">
