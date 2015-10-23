@@ -1,11 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
-use App\Http\Requests;
-use App\Http\Controllers\Controller;
+use \App\Http\Requests;
+use \App\Http\Controllers\Controller;
 use \App\Post;
+use \App\Tags;
 
 class PostTrashController extends Controller
 {
@@ -17,7 +18,7 @@ class PostTrashController extends Controller
     public function index()
     {
         $posts = Post::onlyTrashed()->get();
-        return view('post.trash.index', compact('posts'));
+        return view('admin.post.trash.index', compact('posts'));
     }
 
     /**
@@ -51,7 +52,7 @@ class PostTrashController extends Controller
     {
         $post = Post::onlyTrashed()->where('slug', $slug)->first();
 //        dd($post);
-        return view('post.trash.single', compact('post'));
+        return view('admin.post.trash.single', compact('post'));
     }
 
     /**
@@ -75,7 +76,7 @@ class PostTrashController extends Controller
     public function update(Request $request, $slug)
     {
         Post::onlyTrashed()->where('slug', $slug)->first()->restore();
-        return redirect(route('post.trash.index'))->with('message', 'Post has been restored!');
+        return redirect(route('admin.post.trash.index'))->with('message', 'Post has been restored!');
     }
 
     /**
@@ -87,6 +88,6 @@ class PostTrashController extends Controller
     public function destroy($slug)
     {
         Post::onlyTrashed()->where('slug', $slug)->first()->forceDelete();
-        return redirect(route('post.trash.index'))->with('message', 'Post has been deleted permanently!');
+        return redirect(route('admin.post.trash.index'))->with('message', 'Post has been deleted permanently!');
     }
 }

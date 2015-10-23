@@ -9,7 +9,7 @@ class Post extends Model
 {
     use SoftDeletes;
 
-    protected $fillable = ['title', 'description', 'slug'];
+    protected $fillable = ['title', 'description', 'slug', 'published_at', 'user_id'];
 
     public $timestamps = true;
 
@@ -17,5 +17,9 @@ class Post extends Model
 
     public function tags() {
         return $this->belongsToMany('App\Tag');
+    }
+
+    public function user() {
+        return $this->belongsTo('App\User');
     }
 }

@@ -1,4 +1,4 @@
-@extends('master')
+@extends('admin.master')
 
 @section('content')
 
@@ -17,7 +17,7 @@
             @endif
 
             @foreach($posts as $post)
-                @include('post.trash._trash_list')
+                @include('admin.post.trash._trash_list')
             @endforeach
         @endif
         </div><!-- /.col -->

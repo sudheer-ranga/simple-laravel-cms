@@ -1,11 +1,11 @@
-@extends('master')
+@extends('admin.master')
 
 @section('content')
     <div class="container">
         <div class="row">
             <h2>Create Post</h2>
 
-            {!! Form::open(['route' => 'post.index']) !!}
+            {!! Form::open(['route' => 'admin.post.index']) !!}
                 <div class="form-group">
                     {!! Form::label('title') !!}
                     {!! Form::text('title', null, ['class' => 'form-control']) !!}

@@ -15,11 +15,24 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::group(array('prefix' => 'post'), function() {
-    Route::resource('trash', 'PostTrashController', ['only' => ['index', 'show', 'update', 'destroy']]);
+Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function() {
+    Route::group(['prefix' => 'post'], function() {
+        Route::resource('trash', 'Admin\PostTrashController', ['only' => ['index', 'show', 'update', 'destroy']]);
+    });
+
+    Route::resource('post', 'Admin\PostController');
+
+    Route::resource('tag', 'Admin\TagController');
 });
 
-Route::resource('post', 'PostController');
+
+Route::get('admin', function() {
+    return redirect()->route('login');
+});
+
+Route::get('home', function() {
+    return redirect()->route('admin.post.index');
+});
 
 // Authentication routes...
 Route::get('auth/login', [
@@ -27,6 +40,7 @@ Route::get('auth/login', [
     'uses' => 'Auth\AuthController@getLogin',
 ]);
 Route::post('auth/login', 'Auth\AuthController@postLogin');
+
 Route::get('auth/logout', [
     'as' => 'logout',
     'uses' => 'Auth\AuthController@getLogout',

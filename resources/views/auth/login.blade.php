@@ -1,23 +1,37 @@
-<!-- resources/views/auth/login.blade.php -->
+@extends('auth.master')
 
-<form method="POST" action="/auth/login">
+@section('content')
+
+@if($errors->any())
+    <ul class="alert alert-danger">
+        @foreach($errors->all() as $error)
+            <li>{!! $error !!}</li>
+        @endforeach
+    </ul>
+@endif
+
+<!-- resources/views/auth/login.blade.php -->
+{!! Form::open([route('login')]) !!}
+
     {!! csrf_field() !!}
 
-    <div>
-        Email
-        <input type="email" name="email" value="{{ old('email') }}">
+    <div class="form-group">
+        {!! Form::label('email') !!}
+        {!! Form::email('email', Input::old('email'), ['class' => 'form-control']) !!}
     </div>
 
-    <div>
-        Password
-        <input type="password" name="password" id="password">
+    <div class="form-group">
+        {!! Form::label('password') !!}
+        {!! Form::password('password', ['class' => 'form-control']) !!}
     </div>
 
-    <div>
-        <input type="checkbox" name="remember"> Remember Me
+    <div class="form-group">
+        {!! Form::label('remember') !!}
+        {!! Form::checkbox('remember', 'remember') !!}
     </div>
 
-    <div>
-        <button type="submit">Login</button>
-    </div>
-</form>
+    <button type="submit" class="btn btn-primary">Login</button>
+
+{!! Form::close() !!}
+
+@endsection

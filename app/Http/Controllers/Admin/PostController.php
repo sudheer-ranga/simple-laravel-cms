@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Requests;
@@ -19,9 +19,10 @@ class PostController extends Controller
      */
     public function index()
     {
+        $user = \Auth::user();
 //        $posts = $post->get();
         $posts = Post::all();
-        return view('post.index', compact('posts'));
+        return view('admin.post.index', compact('posts', 'user'));
 //
 //        dd($post);
     }
@@ -34,7 +35,7 @@ class PostController extends Controller
     public function create()
     {
         $tags = Tag::lists('name', 'id');
-        return view('post.create', compact('tags'));
+        return view('admin.post.create', compact('tags'));
     }
 
     /**
@@ -50,9 +51,15 @@ class PostController extends Controller
 //        $post = new Post;
 //        $post->fill($request->all());
 //        $post->save();
-        $post = Post::create($request->all());
+
+//        $post = Post::create($request->all());
+
+        $post = new Post($request->all());
+        \Auth::user()->posts()->save($post);
+
         $post->tags()->attach($request->input('tags'));
-        return redirect(route('post.index'))->with('message', 'Post has been created successfully!');
+
+        return redirect(route('admin.post.index'))->with('message', 'Post has been created successfully!');
     }
 
     /**
@@ -66,7 +73,7 @@ class PostController extends Controller
 //        dd($post);
         $post = Post::whereSlug($slug)->first();
 //        dd($post->tags->toArray());
-        return view('post.single', compact('post'));
+        return view('admin.post.single', compact('post'));
     }
 
     /**
@@ -79,7 +86,7 @@ class PostController extends Controller
     {
         $post = Post::whereSlug($slug)->first();
         $tags = Tag::lists('name', 'id');
-        return view('post.edit', compact('post', 'tags'));
+        return view('admin.post.edit', compact('post', 'tags'));
     }
 
     /**
@@ -105,7 +112,7 @@ class PostController extends Controller
 //        $post->title = $request->title;
 //        $post->description = $request->description;
         $post->save();
-        return view('post.single', compact('post'));
+        return view('admin.post.single', compact('post'));
     }
 
     /**
@@ -118,6 +125,6 @@ class PostController extends Controller
     {
         $post = Post::whereSlug($slug)->first();
         $post->delete();
-        return redirect(route('post.index'))->with('message', 'Post has been deleted!');
+        return redirect(route('admin.post.index'))->with('message', 'Post has been deleted!');
     }
 }

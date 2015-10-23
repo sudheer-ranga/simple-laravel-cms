@@ -16,7 +16,7 @@
     <div class="container">
         <div class="row">
             <div class="col-sm-3">
-                @include('_sidebar')
+                @include('admin._sidebar')
             </div><!-- /.col -->
 
             <div class="col-sm-9">
