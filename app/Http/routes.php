@@ -17,7 +17,10 @@ Route::get('/', function () {
 
 Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function() {
     Route::group(['prefix' => 'post'], function() {
-        Route::resource('trash', 'Admin\PostTrashController', ['only' => ['index', 'show', 'update', 'destroy']]);
+        Route::resource('trash', 'Admin\PostTrashController',
+            [
+                'only' => ['index', 'show', 'update', 'destroy']
+            ]);
     });
 
     Route::resource('post', 'Admin\PostController');
@@ -52,3 +55,20 @@ Route::get('auth/register', [
     'uses' => 'Auth\AuthController@getRegister',
 ]);
 Route::post('auth/register', 'Auth\AuthController@postRegister');
+
+//Front End
+
+Route::resource('tag', 'FrontEnd\TagController', [
+    'only' => ['index', 'show'],
+    'as' => 'frontend',
+]);
+
+Route::resource('post', 'FrontEnd\PostController', [
+    'as' => 'frontend',
+    'only' => ['index', 'show'],
+]);
+
+Route::resource('post.comment', 'FrontEnd\WithAuth\CommentController', [
+    'as' => 'frontend.withauth',
+//    'only' => ['index', 'show', 'update', 'destroy']
+]);

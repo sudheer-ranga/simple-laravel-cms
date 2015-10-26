@@ -7,7 +7,7 @@
 
     <ul class="row">
         @foreach($tags as $tag)
-            <li>{!! link_to_route('admin.tag.show', $tag->name, $tag->id) !!}</li>
+            <li>{!! link_to_route('admin.tag.show', $tag->name, [$tag->slug]) !!}</li>
         @endforeach
     </ul><!-- /.row -->
 @endsection

@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Illuminate\Http\Request;
 use App\Http\Requests;
-use App\Http\Requests\CreatePostRequest;
+use App\Http\Requests\Admin\CreatePostRequest;
+use App\Http\Requests\Admin\UpdatePostRequest;
 use App\Http\Controllers\Controller;
 use \App\Post;
 use \App\Tag;
@@ -19,10 +19,10 @@ class PostController extends Controller
      */
     public function index()
     {
-        $user = \Auth::user();
+//        $user = \Auth::user();
 //        $posts = $post->get();
-        $posts = Post::all();
-        return view('admin.post.index', compact('posts', 'user'));
+        $posts = Post::all()->sortByDesc('updated_at');
+        return view('admin.post.index', compact('posts'));
 //
 //        dd($post);
     }
@@ -57,9 +57,14 @@ class PostController extends Controller
         $post = new Post($request->all());
         \Auth::user()->posts()->save($post);
 
-        $post->tags()->attach($request->input('tags'));
+//        dd($post->tags());
 
-        return redirect(route('admin.post.index'))->with('message', 'Post has been created successfully!');
+        $post->tags()->attach($request->input('tags'));
+        return view('admin.post.show', compact('post'));
+
+//        return redirect()->route('admin.post.show')
+//            ->with('post', $post)
+//            ->with('message', 'Post has been created successfully!');
     }
 
     /**
@@ -71,9 +76,9 @@ class PostController extends Controller
     public function show($slug)
     {
 //        dd($post);
-        $post = Post::whereSlug($slug)->first();
 //        dd($post->tags->toArray());
-        return view('admin.post.single', compact('post'));
+        $post = Post::whereSlug($slug)->first();
+        return view('admin.post.show', compact('post'));
     }
 
     /**
@@ -92,10 +97,10 @@ class PostController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  CreatePostRequest  $request
+     * @param  UpdatePostRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function update(CreatePostRequest $request, $slug)
+    public function update(UpdatePostRequest $request, $slug)
     {
         $post = Post::whereSlug($slug)->first();
         $post->fill($request->all());
@@ -112,7 +117,9 @@ class PostController extends Controller
 //        $post->title = $request->title;
 //        $post->description = $request->description;
         $post->save();
-        return view('admin.post.single', compact('post'));
+
+        return redirect()->route('admin.post.index')
+            ->with('message', 'Post was updated successfully');
     }
 
     /**
@@ -125,6 +132,7 @@ class PostController extends Controller
     {
         $post = Post::whereSlug($slug)->first();
         $post->delete();
-        return redirect(route('admin.post.index'))->with('message', 'Post has been deleted!');
+        return redirect()->route('admin.post.index')
+            ->with('message', 'Post has been deleted!');
     }
 }

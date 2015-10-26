@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Admin;
 
 use App\Http\Requests\Request;
 
@@ -24,7 +24,8 @@ class CreateTagRequest extends Request
     public function rules()
     {
         return [
-            'name' => 'required|min:2'
+            'name' => 'required|min:2',
+            'slug' => 'required|min:2|unique:tags'
         ];
     }
 }

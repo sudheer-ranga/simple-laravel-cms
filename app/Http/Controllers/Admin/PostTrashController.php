@@ -17,7 +17,7 @@ class PostTrashController extends Controller
      */
     public function index()
     {
-        $posts = Post::onlyTrashed()->get();
+        $posts = Post::onlyTrashed()->get()->sortByDesc('deleted_at');
         return view('admin.post.trash.index', compact('posts'));
     }
 
@@ -52,7 +52,7 @@ class PostTrashController extends Controller
     {
         $post = Post::onlyTrashed()->where('slug', $slug)->first();
 //        dd($post);
-        return view('admin.post.trash.single', compact('post'));
+        return view('admin.post.trash.show', compact('post'));
     }
 
     /**

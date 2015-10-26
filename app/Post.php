@@ -15,11 +15,17 @@ class Post extends Model
 
     protected $dates = ['deleted_at'];
 
-    public function tags() {
+    public function tags()
+    {
         return $this->belongsToMany('App\Tag');
     }
 
-    public function user() {
+    public function user()
+    {
         return $this->belongsTo('App\User');
+    }
+
+    public function comments() {
+        return $this->hasMany('App\Comment');
     }
 }

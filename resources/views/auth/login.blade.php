@@ -32,6 +32,8 @@
 
     <button type="submit" class="btn btn-primary">Login</button>
 
+    {!! link_to_route('register', "Register", [], ['class' => 'btn btn-primary']) !!}
+
 {!! Form::close() !!}
 
 @endsection

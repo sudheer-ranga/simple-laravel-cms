@@ -7,11 +7,14 @@
 
             {!! Form::open(['route' => 'admin.tag.index']) !!}
 
-                {{--{!! Form::input('number', 'user_id') !!}--}}
-
                 <div class="form-group">
                     {!! Form::label('name') !!}
                     {!! Form::text('name', null, ['class' => 'form-control']) !!}
+                </div>
+
+                <div class="form-group">
+                    {!! Form::label('slug') !!}
+                    {!! Form::text('slug', null, ['class' => 'form-control']) !!}
                 </div>
 
                 {!! Form::submit('Add Tag', ['class' => 'btn btn-primary btn-block']) !!}

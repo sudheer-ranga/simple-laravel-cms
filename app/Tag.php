@@ -8,7 +8,8 @@ class Tag extends Model
 {
     protected $fillable = [
         'name',
-        'user_id'
+        'slug',
+        'user_id',
     ];
 
     public function posts() {
