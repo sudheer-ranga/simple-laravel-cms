@@ -31,5 +31,6 @@ class PostController extends Controller
     {
         $post = Post::whereSlug($slug)->first();
         return view('frontend.post.show', compact('post'));
+
     }
 }
