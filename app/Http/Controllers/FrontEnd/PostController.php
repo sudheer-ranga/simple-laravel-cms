@@ -30,6 +30,8 @@ class PostController extends Controller
     public function show($slug)
     {
         $post = Post::whereSlug($slug)->first();
+//        $posts = Post::with('comments')->get();
+//        $post = $posts->where('slug', $slug)->first();
         return view('frontend.post.show', compact('post'));
 
     }

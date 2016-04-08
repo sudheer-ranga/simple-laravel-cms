@@ -29,7 +29,7 @@ class TagController extends Controller
     {
 //        return "Single Tag View Page";
         $tag = Tag::whereSlug($slug)->first();
-        $posts = $tag->posts()->get();
-        return view('frontend.tag.show', compact('tag', 'posts'));
+//        $posts = $tag->posts()->get();
+        return view('frontend.tag.show', compact('tag'));
     }
 }

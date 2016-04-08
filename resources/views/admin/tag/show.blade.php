@@ -9,7 +9,7 @@
     {!! Form::close() !!}
 
     <div class="row">
-        @foreach($posts as $post)
+        @foreach($tag->posts as $post)
             @include('admin.post._post_list')
         @endforeach
     </div><!-- /.row -->

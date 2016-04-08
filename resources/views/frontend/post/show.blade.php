@@ -2,6 +2,7 @@
 
 @section('content')
     <h2>{!! $post->title !!}</h2>
+    <p>By - {!! $post->user->name !!} on {!! $post->created_at !!}</p>
     <p>{!! $post->description !!}</p>
     <h5>Tags:</h5>
     <ul>
@@ -16,7 +17,7 @@
         <div class="list-group">
             @foreach ($post->comments as $comment)
                 <div class="list-group-item">
-                    <p class="author"><b>{!! $comment->user->name !!} Commented</b></p>
+                    <p class="author"><b>{!! $comment->user->name !!} Commented</b> on {!! $comment->created_at !!}</p>
                     <p>{{ $comment->comment }}</p>
 
                     @can('edit-comment', $comment)
